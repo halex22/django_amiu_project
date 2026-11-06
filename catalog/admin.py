@@ -1,11 +1,11 @@
 from django.contrib import admin
 
 from catalog.models import Author, Book, Genre, Languages
-
+from catalog import models
 # Register your models here.
 
 
-@admin.register(Genre)
+@admin.register(models.Genre)
 class GenreAdmin(admin.ModelAdmin):
     ...
 

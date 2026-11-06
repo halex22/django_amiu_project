@@ -39,9 +39,9 @@ class Languages(TimeStampModel):
 class Author(TimeStampModel):
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
-    bio = models.TextField(null=True)
-    birth_date = models.DateField(null=True)
-    death_date = models.DateField(null=True)
+    bio = models.TextField(null=True, blank=True)
+    birth_date = models.DateField(null=True, blank=True)
+    death_date = models.DateField(null=True, blank=True)
 
     class Meta:
         db_table = "authors"
@@ -93,3 +93,30 @@ class Book(TimeStampModel):
 
     def __str__(self):
         return self.title
+
+
+if __name__ == "__main__":
+    a = Author(first_name="autori di test", last_name="congome di test")
+    a.save()
+
+    b = Author.objects.create(first_name="Luigi", last_name="Bros")
+
+    # select * from authors where first_name = "autori di test"
+    Author.objects.get(first_name="autori di test")
+
+    # select * from authors
+    Author.objects.all()
+
+    # select * from authors where last_name = "Bros"
+    Author.objects.filter(last_name="Bros")
+
+    # select * from authors where last_name ilike = 'br';
+    Author.objects.filter(last_name__icontains="br")
+
+    # Update
+    t = Author.objects.get(first_name="autori di test")
+    t.first_name = "nuovo nome"
+    t.save()
+
+    # Delete
+    t.delete()
