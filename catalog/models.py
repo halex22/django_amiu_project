@@ -1,6 +1,7 @@
 from django.core.validators import (MaxValueValidator, MinValueValidator,
                                     RegexValidator)
 from django.db import models
+from django.urls import reverse
 
 
 class TimeStampModel(models.Model):
@@ -82,6 +83,7 @@ class Book(TimeStampModel):
             MaxValueValidator(5_000, "book must have max 5 000 pages")
         ]
     )
+    available = models.BooleanField(default=True, null=False)
 
     authors = models.ManyToManyField(Author, related_name="books")
     genres = models.ManyToManyField(Genre, related_name="books")
@@ -93,6 +95,9 @@ class Book(TimeStampModel):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("book-detail", kwargs={"pk": self.pk})
 
 
 if __name__ == "__main__":

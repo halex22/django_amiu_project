@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Book list {% endblock title %}
+
+{% block content %}
+<h2>Books list</h2>
+
+{% for book in books %}
+    {% include "book_card.html" with book=book %}
+{% empty %}
+<p>No books yet </p>
+{% endfor %}
+
+{% endblock content %}

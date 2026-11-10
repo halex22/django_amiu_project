@@ -1,0 +1,9 @@
+asgiref==3.13.0
+click==8.5.0
+Django==6.0
+gunicorn==26.2.0
+h11==0.16.0
+psycopg2-binary==2.9.13
+sqlparse==0.6.1
+tzdata==2026.6
+uvicorn==0.54.0

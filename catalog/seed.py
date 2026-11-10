@@ -35,15 +35,18 @@ austen, _ = Author.objects.get_or_create(
               "death_date": date(1817, 7, 18)},
 )
 
+# python manage.py shell < catalog/seed.py
+
+
 books = [
     # isbn, title, year, pages, available, language, authors, genres, summary
-    ("9780441013593", "Dune", 1965, 612, True, english, [herbert], [scifi],
+    ("9780441013593", "Dune", None, 612, True, english, [herbert], [scifi],
      "A noble family takes control of a desert planet and its precious spice."),
-    ("9780441569595", "Neuromancer", 1984, 271, False, english, [gibson], [scifi],
+    ("9780441569595", "Neuromancer", None, 271, False, english, [gibson], [scifi],
      "A washed-up hacker is hired for one last job in cyberspace."),
-    ("9780345339683", "The Hobbit", 1937, 310, True, english, [tolkien], [fantasy],
+    ("9780345339683", "The Hobbit", None, 310, True, english, [tolkien], [fantasy],
      "A hobbit joins a company of dwarves to reclaim a stolen treasure."),
-    ("9780141439518", "Pride and Prejudice", 1813, 432, True, english, [austen], [classic],
+    ("9780141439518", "Pride and Prejudice", None, 432, True, english, [austen], [classic],
      ""),  # empty summary on purpose: good for testing the default filter
 ]
 
@@ -52,7 +55,7 @@ for isbn, title, year, pages, available, language, authors, genres, summary in b
         isbn=isbn,
         defaults={
             "title": title,
-            "publication_year": year,
+            "publication_date": year,
             "pages": pages,
             "available": available,
             "language": language,

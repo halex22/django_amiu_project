@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %} {{ book.title }} {% endblock title %}
+
+{% block content %}
+<dl>
+  <dt>Authors</dt>
+  <dd>
+    {% for author in book.authors.all %}
+      {{author.full_name}} {% if not forloop.last %}, {%endif %}
+    {% endfor %}
+  </dd>
+
+  <dt>Genres</dt> <dd>{{ book.genres.all|join:", "|default:"N/A"}}</dd>
+  <dt>Language</dt> <dd>{{ book.language.name }}</dd>
+
+  <dt>Pages</dt> <dd>{{ book.pages }}</dd>
+  <dt>isbn</dt> <dd>{{ book.isbn}}</dd>
+
+  <dt>Available</dt> <dd>{{ book.available|yesno:"Available, On loan"}}</dd>
+
+</dl>
+
+<a href="{% url 'book-list' %}">Book to list</a>
+
+{% endblock content %}
+
