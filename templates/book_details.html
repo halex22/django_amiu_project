@@ -21,6 +21,12 @@
 
 </dl>
 
+<div>
+  {% if book.cover %}
+    <img src="{{ book.cover.url }}" alt="{{ book.title }}">
+  {% endif %}
+</div>
+
 <a href="{% url 'book-list' %}">Book to list</a>
 
 {% endblock content %}

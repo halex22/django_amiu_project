@@ -1,5 +1,5 @@
 <article>
-  <h2>{{ book.title }}</h2>
+  <h2><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></h2>
   <p> {{ book.authors.all|join:", " }} </p>
   <p> {{ book.summary|truncatewords:5|default:"No summary yet" }} </p>
   <p> {{ book.available|yesno:"Available, On loan" }} </p>

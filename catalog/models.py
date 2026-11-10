@@ -84,7 +84,8 @@ class Book(TimeStampModel):
         ]
     )
     available = models.BooleanField(default=True, null=False)
-
+    cover = models.ImageField(
+        upload_to="images", default=None, null=True, blank=True)
     authors = models.ManyToManyField(Author, related_name="books")
     genres = models.ManyToManyField(Genre, related_name="books")
     language = models.ForeignKey(

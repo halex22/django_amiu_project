@@ -2,12 +2,46 @@ services:
 
   catalog_db: # service name
     image: postgres:16-alpine
-    # restart: never
+    restart: unless-stopped
     env_file: .env
+    healthcheck:
+       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+       interval: 5s
+       timeout: 3s
+       retries: 10
     volumes:
       - library_db_data:/var/lib/postgresql/data # interno:sterno
     ports:
       - 5412:5432
+
+  web:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      catalog_db:
+        condition: service_healthy
+    volumes:
+      - /mnt/c/code/django_amiu_project/staticfiles:/app/staticfiles
+      - /mnt/c/code/django_amiu_project/media:/app/media
+    expose:
+      - "8000"
+    stop_grace_period: 40s
+
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    container_name: django_nginx
+    depends_on:
+      - web
+    ports:
+      - "80:80"
+    volumes:
+      - /mnt/c/code/django_amiu_project/staticfiles:/app/staticfiles
+      - /mnt/c/code/django_amiu_project/media:/app/media
+      - /mnt/c/code/django_amiu_project/default.conf:/etc/conf.d/default.conf
+    
+
+
 
     
 volumes:
