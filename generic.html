@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %} 
+
+{% block js_block %}
+{% endblock js_block %}
+
+{% block css_block %}
+{% endblock css_block %}
+
+
+{% block title %}{% endblock title %}
+
+{% block content %}
+
+<div class="form-wrapper">
+  <form  method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="field-container{% if field.errors %} has-error{% endif %}">
+        <label class="field-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+
+        {% if field.field.widget.input_type == 'select' %}
+          {{field}}
+        {% else %}
+          <input
+            type="{{ field.field.widget.input_type }}"
+            name="{{ field.html_name }}"
+            id="{{ field.id_for_label }}"
+            class="form-control {% if field.errors %} is-invalid{% endif %} {{ field.field.widget.attrs.class}}"
+
+
+            {% if field.field.widget.input_type == 'date' %}
+            value={{field.value|date:"Y-m-d"}}
+            {% else %}
+            value="{{ field.value|default_if_none:'' }}"
+            {% endif %}
+          />
+        {% endif %}
+        
+
+        {% if field.errors %}
+          <div class="text-danger">
+            {% for error in field.errors %}
+              <small class="error-message">{{ error }}</small><br>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% if field.help_text and not field.errors %}
+          <small class="form-text text-muted">{{ field.help_text }}</small>
+        {% endif %}
+      </div>
+    {% endfor %}
+
+    <button class="sbmt-btn">
+      <span class="btn-text">Salva</span>
+    </button>
+  </form>
+</div>
+
+{% endblock content %}
+
