@@ -15,11 +15,16 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-EXPOSE 8000
+EXPOSE 7999
 
-CMD [ "gunicorn", "library.wsgi:application" , "--bind", "0.0.0.0:8000" ]
+# CMD [ "gunicorn", "library.wsgi:application" , "--bind", "0.0.0.0:8000" ]
 
 
+
+CMD ["gunicorn", "library.wsgi:application", \
+     "--bind", "0.0.0.0:7999", \
+     "--graceful-timeout", "30", \
+     "--access-logfile", "-"]
     #    CMD [ "gunicorn", "library.wsgi:application" \
     #    "--bind", "0.0.0.0:8000" \
     #    "--graceful-timeout", "30" \
